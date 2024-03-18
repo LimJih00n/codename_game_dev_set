@@ -139,8 +139,9 @@ def game_com_codition():
     global Item_count
     global building_tot
     global kill_count
+    global sheep_kill_count
     
-    if kill_count == 2:
+    if kill_count == 5 and sheep_kill_count < 3:
         return True
     return False
 
@@ -204,6 +205,31 @@ def goblin_checker(wall):
                 #delete tree
                 World_Walls.remove(wall)
                 World_objects_draw = [pair for pair in World_objects_draw if pair[0].get_id() != wall.get_id()]
+def sheep_checker(wall):
+    global warrior
+    global World_Items
+    global World_objects_draw
+    global World_Walls
+    global kill_count 
+    global sheep_kill_count
+    if wall.get_type() == "sheep":
+                
+        if "attack" in warrior.get_state():
+            
+                
+            if not warrior.is_attack_hit(wall):
+                say("주변에 적이 없어..")
+            else:
+                say("양을 공격하고 있어!")
+                
+            if wall.get_hp() <= 0:
+                
+                
+                kill_count += 1
+                sheep_kill_count +=1
+                
+                World_Walls.remove(wall)
+                World_objects_draw = [pair for pair in World_objects_draw if pair[0].get_id() != wall.get_id()]
 
 def Build(X,Y):
     global warrior
@@ -243,35 +269,49 @@ World_objects_draw.append((warrior,warrior_draw))
 
 
 
-goblin = world.Wall(350,200,ids.goblin_img_dic,"goblin",5000)
-goblin_draw = DrawImage(goblin)
-World_objects_draw.append((goblin,goblin_draw))
-World_Walls.append(goblin)
+for i in range(10):
+    
+    if i%2==1:
+        goblin = world.Wall(65+i*40,200,ids.goblin_img_dic,"goblin",50)
+        goblin.set_velocity(4,4)
+        goblin.set_direction("R")
+        goblin_draw = DrawImage(goblin)
+        World_objects_draw.append((goblin,goblin_draw))
+        World_Walls.append(goblin)
+    else:
+        sheep = world.Wall(45+i*40,200,ids.sheep_img_dic,"sheep",50)
+        sheep.set_velocity(4,4)
+        sheep.set_direction("R")
+        sheep_draw = DrawImage(sheep)
+        World_objects_draw.append((sheep,sheep_draw))
+        World_Walls.append(sheep)
     
 
-goblin = world.Wall(150,200,ids.goblin_img_dic,"goblin",5000)
-goblin_draw = DrawImage(goblin)
-World_objects_draw.append((goblin,goblin_draw))
-World_Walls.append(goblin)
 
 for i in range(5):
-    
-    castle = world.Wall(i*100,100,ids.Castle_img_dic,"wall",10000)
-    castle_draw = DrawImage(castle)
-    World_objects_draw.append((castle,castle_draw))
-    World_Walls.append(castle)
+    if i%2==0:
+        castle = world.Wall(i*100,100,ids.Castle_img_dic,"wall",10000)
+        castle_draw = DrawImage(castle)
+        World_objects_draw.append((castle,castle_draw))
+        World_Walls.append(castle)
+    else:
+        house = world.Wall(i*100,50,ids.House_img_dic,"house",10000)
+        house_draw = DrawImage(house)
+        World_objects_draw.append((house,house_draw))
+        World_Walls.append(house)
     
 for i in range(5):
     
-    tree = world.Wall(i*100+75,370,ids.tree_img_dic,"tree",1000)
-    tree_draw = DrawImage(tree)
-    World_objects_draw.append((tree,tree_draw))
-    World_Walls.append(tree)
-    castle = world.Wall(i*100,250,ids.Castle_img_dic,"wall",10000)
-    castle_draw = DrawImage(castle)
-    World_objects_draw.append((castle,castle_draw))
-    World_Walls.append(castle)
-
+    if i%2==1:
+        castle = world.Wall(i*100,250,ids.Castle_img_dic,"wall",10000)
+        castle_draw = DrawImage(castle)
+        World_objects_draw.append((castle,castle_draw))
+        World_Walls.append(castle)
+    else:
+        house = world.Wall(i*100,350,ids.House_img_dic,"house",10000)
+        house_draw = DrawImage(house)
+        World_objects_draw.append((house,house_draw))
+        World_Walls.append(house)
 ###################  map make #####################
 
 
@@ -281,6 +321,7 @@ ratValue = 0
 func_check = True
 building_tot = 0
 kill_count = 0
+sheep_kill_count = 0
 
 
 
@@ -309,11 +350,6 @@ def frame_loop(*args):
         
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         
-        
-        
-        
-        
-        
         for obj,draw in World_objects_draw:
             update_draw(obj,draw)
         
@@ -328,9 +364,13 @@ def frame_loop(*args):
         for wall in World_Walls:
             
             if wall.get_type() == "goblin":
-                wall.move_rectangle(50,200,450,200)
+                wall.move_rectangle(85,200,425,200)
+                goblin_checker(wall)
+            if  wall.get_type() == "sheep":
+                wall.move_rectangle(50,200,400,200)
+                sheep_checker(wall)
             
-            goblin_checker(wall)
+            
             
             if warrior.check_collision(wall):                                                                                                                    
                 warrior.set_velocity(0,0)

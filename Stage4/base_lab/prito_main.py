@@ -9,6 +9,8 @@ import pywebcanvas as pwc
 import random
 
 
+
+
 lastTime = 6
 canvas = document.getElementById('Canvas')
 canvas.width = 500
@@ -123,15 +125,21 @@ def notify_server_game_completed():
 
 ################################# user #########################
 def UserInitCode():
-    state = 0
+    try:
+        state = 0
 #$user_init_start
     # Enter your code here
 #$user_init_out
+    except Exception as e:
+        window.sendPyErrorMessage(e)
 def UserLoopCode():
-    state=0
+    try:
+        state = 0
 #$user_loop_start
     
 #$user_loop_out
+    except Exception as e:
+        window.sendPyErrorMessage(e)
 ################################# user #########################
 
 ################################othet function################
@@ -342,10 +350,6 @@ def frame_loop(*args):
                 Item_count += 1
                 World_Items.remove(item)
                 World_objects_draw = [pair for pair in World_objects_draw if pair[0].get_id() != item.get_id()]
-                
-                
-                
-      
         
         window.sendXY(warrior.get_x(),warrior.get_y(),warrior.get_gold(),warrior.get_wood())
                 

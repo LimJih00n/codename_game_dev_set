@@ -1,4 +1,17 @@
-1) 앞으로 가기 먹으면 돈이 올라간다
-=> 돈올라가는 함수, java에 같이 보내기
+./pa1.exe 3 "[('insert',3), ('insert',5), ('insert',4)]"
+./pa1.exe 3 "[('insert',3), ('insert',5)]"
+./pa1.exe 3 "[('insert',3)]"
+./pa1.exe 3 "[('insert', 1), ('insert', 2),('insert', 1)]"
+./pa1.exe 3 "[('insert', 1), ('insert', 1), ('insert', 2), ('insert', 3), ('delete', 1)]"
+./pa1.exe 3 "[('insert',3), ('insert',5), ('insert',4), ('delete',1), ('insert',2), ('delete',0)]"
+./pa1.exe 3 "[('insert',3), ('insert',5), ('insert',4),('insert',2)]"
+./pa1.exe 3 "[('insert',3), ('delete',2)]"
+./pa1.exe 3 "[('insert',1), ('insert',2), ('insert',3), ('delete',1)]"
+./pa1.exe 3 "[('delete',0)] "
+./pa1.exe 3 "[('insert', 1), ('insert', 1), ('insert', 2), ('insert', 3), ('delete', 1)] "
 
-2) 
+
+./pa1.exe 5 "[('enqueue',5),('enqueue',5),('enqueue',5),('enqueue',5), ('show', 0)]"
+./pa1.exe 5 "[('enqueue',5), ('enqueue',3), ('enqueue',8), ('enqueue',11),('show', 0), ('dequeue',0), ('show', 0), ('peek', 0)]"
+./pa1.exe 5 "[('enqueue',5), ('enqueue',3), ('enqueue',8), ('enqueue',11),('dequeue',0),('show', 0)]"
+./pa1.exe 5 "[('enqueue',5), ('enqueue',3), ('enqueue',8), ('enqueue',11),('show', 0), ('dequeue',0), ('show', 0)]"

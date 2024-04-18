@@ -123,15 +123,21 @@ def notify_server_game_completed():
 
 ################################# user #########################
 def UserInitCode():
-    state = 0
+    try:
+        state = 0
 #$user_init_start
     # Enter your code here
 #$user_init_out
+    except Exception as e:
+        window.sendPyErrorMessage(e)
 def UserLoopCode():
-    state=0
+    try:
+        state = 0
 #$user_loop_start
     
 #$user_loop_out
+    except Exception as e:
+        window.sendPyErrorMessage(e)
 ################################# user #########################
 
 ################################othet function################

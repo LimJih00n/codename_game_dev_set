@@ -146,7 +146,7 @@ def game_com_codition():
     global building_tot
     global kill_count
     
-    if kill_count == 10:
+    if kill_count == 1:
         return True
     return False
 
@@ -242,30 +242,19 @@ background_draw = DrawImage(background)
 World_objects_draw.append((background,background_draw))
 
 
-warrior = world.Hero(0,200,ids.knight_img_dic,"hero",100)
+warrior = world.Hero(200,200,ids.knight_img_dic,"hero",100)
 warrior_draw = DrawImage(warrior)
 warrior.Build = Build
 World_objects_draw.append((warrior,warrior_draw))
 
 
 
-for i in range(10):
-    goblin = world.Wall(100+i*20,200,ids.goblin_img_dic,"goblin",50)
-    goblin.set_velocity(4,4)
-    goblin.set_direction("R")
-    goblin_draw = DrawImage(goblin)
-    World_objects_draw.append((goblin,goblin_draw))
-    World_Walls.append(goblin)
-    
-
-
-
 for i in range(5):
     
-    castle = world.Wall(i*100,100,ids.Castle_img_dic,"wall",10000)
-    castle_draw = DrawImage(castle)
-    World_objects_draw.append((castle,castle_draw))
-    World_Walls.append(castle)
+    house = world.Wall(i*100,100,ids.House_img_dic,"wall",10000)
+    house_draw = DrawImage(house)
+    World_objects_draw.append((house,house_draw))
+    World_Walls.append(house)
     
 for i in range(5):
     
@@ -273,10 +262,12 @@ for i in range(5):
     tree_draw = DrawImage(tree)
     World_objects_draw.append((tree,tree_draw))
     World_Walls.append(tree)
-    castle = world.Wall(i*100,250,ids.Castle_img_dic,"wall",10000)
-    castle_draw = DrawImage(castle)
-    World_objects_draw.append((castle,castle_draw))
-    World_Walls.append(castle)
+    house = world.Wall(i*100+50,250,ids.House_img_dic,"wall",10000)
+    house_draw = DrawImage(house)
+    World_objects_draw.append((house,house_draw))
+    World_Walls.append(house)
+
+
 
 ###################  map make #####################
 
@@ -287,8 +278,7 @@ ratValue = 0
 func_check = True
 building_tot = 0
 kill_count = 0
-
-
+user_say = ""
 
 
 ################## init val and func ################
@@ -298,6 +288,7 @@ kill_count = 0
 def frame_loop(*args):
     
     ## global var in loop
+    
     global warrior
     
     global lastTime
@@ -315,11 +306,6 @@ def frame_loop(*args):
         
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         
-        
-        
-        
-        
-        
         for obj,draw in World_objects_draw:
             update_draw(obj,draw)
         
@@ -330,14 +316,7 @@ def frame_loop(*args):
             
             
         
-    
         for wall in World_Walls:
-            
-            if wall.get_type() == "goblin":
-                wall.move_rectangle(50,200,450,200)
-            
-            goblin_checker(wall)
-            
             if warrior.check_collision(wall):                                                                                                                    
                 warrior.set_velocity(0,0)
                 
@@ -353,9 +332,6 @@ def frame_loop(*args):
                 World_Items.remove(item)
                 World_objects_draw = [pair for pair in World_objects_draw if pair[0].get_id() != item.get_id()]
                 
-                
-                
-      
         
         window.sendXY(warrior.get_x(),warrior.get_y(),warrior.get_gold(),warrior.get_wood())
                 

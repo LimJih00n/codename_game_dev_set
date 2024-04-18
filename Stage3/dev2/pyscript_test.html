@@ -6,22 +6,38 @@
     <py-env>
       - pywebcanvas
       - paths:
-            - ./world.py
-            - ./img_dic_set.py
+            - ../../common_file/world.py
+            - ../../common_file/img_dic_set.py
+
             
     </py-env>
     <style>
+      py-script {
+        color: white; /* Change text color to white */
+      }
+    
+      /* Assuming PyScript uses a class or direct child elements to display output */
+      py-script output,  /* Target any <output> elements inside <py-script> */
+      py-script div {    /* Assume divs might be used for output */
+        color: white;    /* Change text color to white */
+      }
   </style>
   </head>
   <body>
     <div>
       <canvas id="Canvas"></canvas>
   </div>
-  <script src="./pyindex.js"></script>
+  <script src="../../common_file/pyindex.js"></script>
     <py-script src="./prito_main.py" config="game.toml">
         
     <py-script>
-  
+      <script>
+        // PyScript 코드 실행 후 검사를 수행
+        document.addEventListener('DOMContentLoaded', function() {
+          // DOM 로드 후 5초 기다린 후 함수 호출
+          setTimeout(checkAndSendMessage, 6000);
+        });
+        </script>
    
   </body>
 </html>
